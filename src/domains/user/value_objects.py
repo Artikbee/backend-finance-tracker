@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass
 
 from domains.user.errors import (
-    UserEmailNotValid,
+    UserEmailValidError,
     UserLastNameMinError,
     UserLastNameMaxError,
     UserFirstNameMinError,
@@ -17,7 +17,7 @@ class UserEmail:
     def __post_init__(self) -> None:
         pattern = r'[\w\.-]+@[\w\.-]+\.\w+$'
         if not re.match(pattern, self.value):
-            raise UserEmailNotValid(email=self.value)
+            raise UserEmailValidError(email=self.value)
 
 
 @dataclass

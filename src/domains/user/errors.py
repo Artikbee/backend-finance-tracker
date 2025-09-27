@@ -4,9 +4,10 @@ from domains.__common__.errors import FieldError
 
 
 @dataclass
-class UserEmailNotValid(FieldError):
+class UserEmailValidError(FieldError):
     email: str
 
+    @property
     def message(self) -> str:
         return f"The email '{self.email}' is not valid"
 
@@ -15,6 +16,7 @@ class UserEmailNotValid(FieldError):
 class UserLastNameMaxError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The last name length should not exceed {self.length}"
 
@@ -23,6 +25,7 @@ class UserLastNameMaxError(FieldError):
 class UserLastNameMinError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The last name length should not less than {self.length}"
 
@@ -31,6 +34,7 @@ class UserLastNameMinError(FieldError):
 class UserFirstNameMaxError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The first name length should not exceed {self.length}"
 
@@ -39,5 +43,6 @@ class UserFirstNameMaxError(FieldError):
 class UserFirstNameMinError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The first name length should not less than {self.length}"

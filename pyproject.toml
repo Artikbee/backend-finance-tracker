@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project]
+name = "backend-finance-tracker"
+dynamic = ["version"]
+description = "Finance tracker API"
+requires-python = ">=3.10"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "dishka==1.*",
+    "fastapi==0.115.*",
+    "alembic==1.13.*",
+    "sqlalchemy[asyncio]==2.*",
+    "psycopg[binary]==3.*",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-asyncio",
+]
+lint = [
+    "ruff",
+]
+
+[tool.pytest.ini_options]
+xfail_strict = true
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+markers = ["value_objects"]
