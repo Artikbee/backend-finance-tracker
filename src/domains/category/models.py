@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import NewType, cast
+
 from typing_extensions import Self
 
 from domains.__common__.base_entity import BaseEntity
@@ -9,7 +10,7 @@ from domains.user.models import UserID
 CategoryID = NewType('CategoryID', int)
 
 
-@dataclass
+@dataclass(slots=True)
 class Category(BaseEntity[CategoryID]):
     user_id: UserID
     name: CategoryName

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from domains.category.errors import CategoryNameMinError, CategoryNameMaxError
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class CategoryName:
     value: str
 

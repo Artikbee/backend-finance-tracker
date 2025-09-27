@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from domains.__common__.errors import FieldError
 
 
-@dataclass
+@dataclass(eq=False)
 class CategoryNameMaxError(FieldError):
     length: int
 
@@ -12,7 +12,7 @@ class CategoryNameMaxError(FieldError):
         return f"The category name length should not exceed {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class CategoryNameMinError(FieldError):
     length: int
 

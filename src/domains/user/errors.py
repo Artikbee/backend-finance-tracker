@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from domains.__common__.errors import FieldError
 
 
-@dataclass
+@dataclass(eq=False)
 class UserEmailValidError(FieldError):
     email: str
 
@@ -12,7 +12,7 @@ class UserEmailValidError(FieldError):
         return f"The email '{self.email}' is not valid"
 
 
-@dataclass
+@dataclass(eq=False)
 class UserLastNameMaxError(FieldError):
     length: int
 
@@ -21,7 +21,7 @@ class UserLastNameMaxError(FieldError):
         return f"The last name length should not exceed {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class UserLastNameMinError(FieldError):
     length: int
 
@@ -30,7 +30,7 @@ class UserLastNameMinError(FieldError):
         return f"The last name length should not less than {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class UserFirstNameMaxError(FieldError):
     length: int
 
@@ -39,7 +39,7 @@ class UserFirstNameMaxError(FieldError):
         return f"The first name length should not exceed {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class UserFirstNameMinError(FieldError):
     length: int
 

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 from typing import NewType, cast
+
 from typing_extensions import Self
 
 from domains.__common__.base_entity import BaseEntity
@@ -12,7 +13,7 @@ from domains.transaction.value_objects import TransactionCurrency, TransactionDe
 TransactionID = NewType("TransactionID", int)
 
 
-@dataclass
+@dataclass(slots=True)
 class Transaction(BaseEntity[TransactionID]):
     account_id: AccountID
     category_id: CategoryID

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from domains.__common__.errors import FieldError
 
 
-@dataclass
+@dataclass(eq=False)
 class AccountNameMaxError(FieldError):
     length: int
 
@@ -11,7 +11,7 @@ class AccountNameMaxError(FieldError):
         return f"The account name length should not exceed {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class AccountNameMinError(FieldError):
     length: int
 
@@ -19,7 +19,7 @@ class AccountNameMinError(FieldError):
         return f"The account name length should not less than {self.length}"
 
 
-@dataclass
+@dataclass(eq=False)
 class AccountCurrencyAvailableError(FieldError):
     currency: str
 

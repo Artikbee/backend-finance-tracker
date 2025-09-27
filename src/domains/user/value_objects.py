@@ -10,7 +10,7 @@ from domains.user.errors import (
 )
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class UserEmail:
     value: str
 
@@ -20,7 +20,7 @@ class UserEmail:
             raise UserEmailValidError(email=self.value)
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class UserLastName:
     value: str
 
@@ -33,7 +33,7 @@ class UserLastName:
             raise UserLastNameMaxError(last_name_max_length)
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class UserFirstName:
     value: str
 

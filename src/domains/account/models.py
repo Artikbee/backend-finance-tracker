@@ -1,6 +1,7 @@
 import decimal
 from dataclasses import dataclass
 from typing import NewType, cast
+
 from typing_extensions import Self
 
 from domains.__common__.base_entity import BaseEntity
@@ -11,7 +12,7 @@ from domains.user.models import UserID
 AccountID = NewType('AccountID', int)
 
 
-@dataclass
+@dataclass(slots=True)
 class Account(BaseEntity[AccountID]):
     user_id: UserID
     name: AccountName

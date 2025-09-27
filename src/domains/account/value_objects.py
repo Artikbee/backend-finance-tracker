@@ -4,7 +4,7 @@ from domains.__common__.constants import CURRENCIES
 from domains.account.errors import AccountNameMinError, AccountNameMaxError, AccountCurrencyAvailableError
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class AccountName:
     value: str
 
@@ -17,7 +17,7 @@ class AccountName:
             raise AccountNameMaxError(name_max_length)
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class AccountCurrency:
     value: str
 

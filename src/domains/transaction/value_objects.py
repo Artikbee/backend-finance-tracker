@@ -8,7 +8,7 @@ from domains.transaction.errors import (
 )
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class TransactionCurrency:
     value: str
 
@@ -17,7 +17,7 @@ class TransactionCurrency:
             raise TransactionCurrencyAvailableError(self.value)
 
 
-@dataclass
+@dataclass(slots=True, frozen=True, eq=True)
 class TransactionDescription:
     value: str
 

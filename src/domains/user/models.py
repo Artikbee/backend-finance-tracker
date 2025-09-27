@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import NewType, cast
+
 from typing_extensions import Self
 
 from domains.__common__.base_entity import BaseEntity
@@ -9,7 +10,7 @@ from domains.user.value_objects import UserEmail, UserLastName, UserFirstName
 UserID = NewType('UserID', int)
 
 
-@dataclass
+@dataclass(slots=True)
 class User(BaseEntity[UserID]):
     email: UserEmail
     hashed_password: str
