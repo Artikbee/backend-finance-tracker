@@ -7,6 +7,7 @@ from domains.__common__.errors import FieldError
 class CategoryNameMaxError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The category name length should not exceed {self.length}"
 
@@ -15,5 +16,6 @@ class CategoryNameMaxError(FieldError):
 class CategoryNameMinError(FieldError):
     length: int
 
+    @property
     def message(self) -> str:
         return f"The category name length should not less than {self.length}"
