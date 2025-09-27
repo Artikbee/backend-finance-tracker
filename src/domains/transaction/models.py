@@ -7,6 +7,7 @@ from domains.__common__.base_entity import BaseEntity
 from domains.account.models import AccountID
 from domains.category.models import CategoryID
 from domains.transaction.enums import TransactionType
+from domains.transaction.value_objects import TransactionCurrency, TransactionDescription
 
 TransactionID = NewType("TransactionID", int)
 
@@ -16,9 +17,9 @@ class Transaction(BaseEntity[TransactionID]):
     account_id: AccountID
     category_id: CategoryID
     transaction_type: TransactionType
-    currency: str
+    currency: TransactionCurrency
     amount: Decimal
-    description: str
+    description: TransactionDescription
 
     @classmethod
     def create(
@@ -26,9 +27,9 @@ class Transaction(BaseEntity[TransactionID]):
             account_id: AccountID,
             category_id: CategoryID,
             transaction_type: TransactionType,
-            currency: str,
+            currency: TransactionCurrency,
             amount: Decimal,
-            description: str
+            description: TransactionDescription,
     ) -> Self:
         return cls(
             oid=cast("TransactionID", None),

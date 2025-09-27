@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import NewType, cast
 from typing_extensions import Self
 
-from src.domains.__common__.base_entity import BaseEntity
-from src.domains.user.enums import UserRole
-from src.domains.user.value_objects import UserEmail, UserLastName, UserFirstName
+from domains.__common__.base_entity import BaseEntity
+from domains.user.enums import UserRole
+from domains.user.value_objects import UserEmail, UserLastName, UserFirstName
 
 UserID = NewType('UserID', int)
 

@@ -5,6 +5,7 @@ from typing_extensions import Self
 
 from domains.__common__.base_entity import BaseEntity
 from domains.account.enums import AccountType
+from domains.account.value_objects import AccountName, AccountCurrency
 from domains.user.models import UserID
 
 AccountID = NewType('AccountID', int)
@@ -13,19 +14,19 @@ AccountID = NewType('AccountID', int)
 @dataclass
 class Account(BaseEntity[AccountID]):
     user_id: UserID
-    name: str
+    name: AccountName
     account_type: AccountType
-    currency: str
+    currency: AccountCurrency
     balance: decimal.Decimal
     is_active: bool
 
-    def update_name(self, name: str) -> None:
+    def update_name(self, name: AccountName) -> None:
         self.name = name
 
     def update_type(self, account_type: AccountType) -> None:
         self.account_type = account_type
 
-    def update_currency(self, currency: str) -> None:
+    def update_currency(self, currency: AccountCurrency) -> None:
         self.currency = currency
 
     def update_balance(self, balance: decimal.Decimal) -> None:
@@ -38,9 +39,9 @@ class Account(BaseEntity[AccountID]):
     def create(
             cls,
             user_id: UserID,
-            name: str,
+            name: AccountName,
             account_type: AccountType,
-            currency: str,
+            currency: AccountCurrency,
             balance: decimal.Decimal,
             is_active: bool,
     ) -> Self:
