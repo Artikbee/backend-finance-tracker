@@ -25,7 +25,7 @@ class Account(BaseEntity[AccountID]):
     def update_name(self, name: AccountName) -> None:
         self.name = name
 
-    def update_type(self, account_type: AccountType) -> None:
+    def update_account_type(self, account_type: AccountType) -> None:
         self.account_type = account_type
 
     def update_currency(self, currency: Currency) -> None:
