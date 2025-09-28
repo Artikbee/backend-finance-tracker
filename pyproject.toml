@@ -24,6 +24,7 @@ dependencies = [
     "alembic==1.13.*",
     "sqlalchemy[asyncio]==2.*",
     "psycopg[binary]==3.*",
+    "pyjwt[crypto]==2.10.1",
 ]
 
 [project.optional-dependencies]
