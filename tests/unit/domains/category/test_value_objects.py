@@ -1,6 +1,6 @@
 import pytest
 
-from domains.__common__.errors import FieldError
+from domains.__common__.base_errors import FieldError
 from domains.category.errors import CategoryNameMinError, CategoryNameMaxError
 from domains.category.value_objects import CategoryName
 

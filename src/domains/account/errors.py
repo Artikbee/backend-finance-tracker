@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from domains.__common__.errors import FieldError
+from domains.__common__.base_errors import FieldError
 
 
 @dataclass(eq=False)

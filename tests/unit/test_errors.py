@@ -1,4 +1,4 @@
-from src.domains.__common__.errors import DomainError
+from domains.__common__.base_errors import DomainError
 
 
 def test_domain_error() -> None:
