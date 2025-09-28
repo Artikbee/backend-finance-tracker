@@ -1,20 +1,9 @@
 from dataclasses import dataclass
 
-from domains.__common__.constants import CURRENCIES
 from domains.transaction.errors import (
-    TransactionCurrencyAvailableError,
     TransactionDescriptionMaxError,
     TransactionDescriptionMinError,
 )
-
-
-@dataclass(slots=True, frozen=True, eq=True)
-class TransactionCurrency:
-    value: str
-
-    def __post_init__(self) -> None:
-        if self.value not in CURRENCIES:
-            raise TransactionCurrencyAvailableError(self.value)
 
 
 @dataclass(slots=True, frozen=True, eq=True)

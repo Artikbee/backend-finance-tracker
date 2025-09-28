@@ -8,7 +8,7 @@ from domains.__common__.base_entity import BaseEntity
 from domains.account.models import AccountID
 from domains.category.models import CategoryID
 from domains.transaction.enums import TransactionType
-from domains.transaction.value_objects import TransactionCurrency, TransactionDescription
+from domains.transaction.value_objects import TransactionDescription
 
 TransactionID = NewType("TransactionID", int)
 
@@ -18,7 +18,6 @@ class Transaction(BaseEntity[TransactionID]):
     account_id: AccountID
     category_id: CategoryID
     transaction_type: TransactionType
-    currency: TransactionCurrency
     amount: Decimal
     description: TransactionDescription
 
@@ -28,7 +27,6 @@ class Transaction(BaseEntity[TransactionID]):
             account_id: AccountID,
             category_id: CategoryID,
             transaction_type: TransactionType,
-            currency: TransactionCurrency,
             amount: Decimal,
             description: TransactionDescription,
     ) -> Self:
@@ -37,7 +35,6 @@ class Transaction(BaseEntity[TransactionID]):
             account_id=account_id,
             category_id=category_id,
             transaction_type=transaction_type,
-            currency=currency,
             amount=amount,
             description=description,
         )

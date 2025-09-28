@@ -17,11 +17,3 @@ class AccountNameMinError(FieldError):
 
     def message(self) -> str:
         return f"The account name length should not less than {self.length}"
-
-
-@dataclass(eq=False)
-class AccountCurrencyAvailableError(FieldError):
-    currency: str
-
-    def message(self) -> str:
-        return f"The account currency '{self.currency}' is not available"
