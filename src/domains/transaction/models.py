@@ -13,7 +13,7 @@ from domains.transaction.value_objects import TransactionDescription
 TransactionID = NewType("TransactionID", int)
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class Transaction(BaseEntity[TransactionID]):
     account_id: AccountID
     category_id: CategoryID
