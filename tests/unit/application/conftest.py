@@ -37,4 +37,5 @@ def fake_user_gateway() -> UserGateway:
     fake = Mock()
     fake.get_by_email = AsyncMock(return_value=None)
     fake.get_by_email_and_password = AsyncMock(return_value=None)
+    fake.get_by_user_id = AsyncMock(return_value=None)
     return fake

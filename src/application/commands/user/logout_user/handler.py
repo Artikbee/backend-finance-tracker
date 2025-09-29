@@ -24,7 +24,7 @@ class LogoutUserCommandHandler:
         self._entity_saver = entity_saver
 
     async def run(self, data: LogoutUserCommand) -> LogoutUserCommandResponse:
-        validate_user_already_exists(...)
+        # validate_user_already_exists(...)
 
         return LogoutUserCommandResponse(
             message="Logout successful",

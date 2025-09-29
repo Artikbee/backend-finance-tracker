@@ -27,3 +27,4 @@ class DeleteUserCommandHandler:
 
         await self._entity_saver.delete(user)
         await self._transaction_db.commit()
+

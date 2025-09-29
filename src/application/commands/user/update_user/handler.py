@@ -3,7 +3,6 @@ import logging
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
-from application.__common__.validators.user_already_exists import validate_user_already_exists
 from application.commands.user.update_user.dtos import (
     UpdateUserCommand,
     UpdateUserCommandResponse,
@@ -12,7 +11,7 @@ from application.commands.user.update_user.dtos import (
 logger = logging.getLogger(__name__)
 
 
-class RegisterUserCommandHandler:
+class UpdateUserCommandHandler:
     def __init__(
             self,
             user_gateway: UserGateway,
@@ -25,7 +24,6 @@ class RegisterUserCommandHandler:
 
     async def run(self, data: UpdateUserCommand) -> UpdateUserCommandResponse:
         user = await self._user_gateway.get_by_user_id(user_id=data.user_id)
-        validate_user_already_exists(user)
 
         user.update_is_active(data.is_active)
         user.update_last_name(data.last_name)
