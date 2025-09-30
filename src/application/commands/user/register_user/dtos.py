@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from domains.user.value_objects import UserEmail
+
 
 @dataclass(frozen=True, slots=True)
 class RegisterUserCommandResponse:
@@ -8,5 +10,5 @@ class RegisterUserCommandResponse:
 
 @dataclass(frozen=True, slots=True)
 class RegisterUserCommand:
-    email: str
+    email: UserEmail
     password: str

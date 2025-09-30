@@ -3,7 +3,6 @@ import logging
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
-from application.__common__.validators.user_already_exists import validate_user_already_exists
 from application.commands.user.logout_user.dtos import (
     LogoutUserCommand,
     LogoutUserCommandResponse,

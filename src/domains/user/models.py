@@ -10,7 +10,7 @@ from domains.user.value_objects import UserEmail, UserLastName, UserFirstName
 UserID = NewType('UserID', int)
 
 
-@dataclass(slots=True, kw_only=True)
+@dataclass
 class User(BaseEntity[UserID]):
     email: UserEmail
     hashed_password: str

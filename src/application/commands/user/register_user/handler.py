@@ -7,7 +7,6 @@ from application.__common__.validators.user_already_exists import validate_user_
 from application.commands.user.register_user.dtos import RegisterUserCommand, RegisterUserCommandResponse
 from domains.user.enums import UserRole
 from domains.user.models import User
-from domains.user.value_objects import UserEmail
 
 logger = logging.getLogger(__name__)
 
@@ -24,18 +23,18 @@ class RegisterUserCommandHandler:
         self._entity_saver = entity_saver
 
     async def run(self, data: RegisterUserCommand) -> RegisterUserCommandResponse:
-        user = await self._user_gateway.get_by_email(email=UserEmail(data.email))
+        user = await self._user_gateway.get_by_email(email=data.email)
         validate_user_already_exists(user)
 
-        user = User.create(
-            email=UserEmail(data.email),
+        new_user = User.create(
+            email=data.email,
             hashed_password=data.password,
             last_name=None,
             first_name=None,
             role=UserRole.USER,
             is_active=True,
         )
-        self._entity_saver.add_one(user)
+        self._entity_saver.add_one(new_user)
         await self._transaction_db.commit()
 
         return RegisterUserCommandResponse(
