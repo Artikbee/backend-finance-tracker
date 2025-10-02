@@ -10,3 +10,10 @@ class ConflictError(ApplicationError):
     Request conflict with the current state of the target resource.
     """
     ...
+
+
+class NotFoundError(ApplicationError):
+    """
+    404 - HTTP status code
+    """
+    ...

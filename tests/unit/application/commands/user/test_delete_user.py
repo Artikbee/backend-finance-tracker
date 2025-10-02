@@ -12,7 +12,7 @@ from domains.user.value_objects import UserEmail
 @pytest.mark.parametrize(
     "dto",
     [
-        DeleteUserCommand("fake@example.com", 123),
+        DeleteUserCommand("access_token"),
     ],
 )
 async def test_delete_user(
@@ -20,11 +20,13 @@ async def test_delete_user(
         fake_transaction_db: Mock,
         fake_entity_saver: Mock,
         fake_user_gateway: Mock,
+        fake_jwt_service: Mock,
 ) -> None:
     interactor = DeleteUserCommandHandler(
         user_gateway=fake_user_gateway,
         transaction_db=fake_transaction_db,
         entity_saver=fake_entity_saver,
+        jwt_service=fake_jwt_service,
     )
 
     fake_user = User.create(

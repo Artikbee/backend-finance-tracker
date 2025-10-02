@@ -13,6 +13,7 @@ def fake_jwt_service() -> JWTService:
     fake = Mock()
     fake.generate = AsyncMock()
     fake.get_expires_time = AsyncMock()
+    fake.verify_and_get_user_id = AsyncMock(return_value=None)
     return fake
 
 

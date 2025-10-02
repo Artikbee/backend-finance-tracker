@@ -1,3 +1,5 @@
+In this project, I try to cover everything with tests. However, in a real project, you will most likely not have enough time to test absolutely everything. Therefore, it’s better to focus on writing tests for authentication and authorization, as well as for key business processes (for example, the shopping cart or product creation).
+
 You can add `Keycloack` for auth.
 https://www.keycloak.org/
 

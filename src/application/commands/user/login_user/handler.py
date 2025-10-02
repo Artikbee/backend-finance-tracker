@@ -4,6 +4,7 @@ from application.__common__.ports.jwt_service.jwt_service import JWTService
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
+from application.__common__.validators.user_not_found import validate_user_not_found
 from application.commands.user.login_user.dtos import (
     LoginUserCommand,
     LoginUserCommandResponse,
@@ -30,6 +31,7 @@ class LoginUserCommandHandler:
             email=data.email,
             hashed_password=data.password,
         )
+        validate_user_not_found(user)
 
         access_token, refresh_token = await self._jwt_service.generate(user_id=user.oid)
         access_expires_in, refresh_expires_in = await self._jwt_service.get_expires_time()

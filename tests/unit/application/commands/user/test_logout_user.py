@@ -17,11 +17,13 @@ async def test_logout_user(
         fake_transaction_db: Mock,
         fake_entity_saver: Mock,
         fake_user_gateway: Mock,
+        fake_jwt_service: Mock,
 ) -> None:
     interactor = LogoutUserCommandHandler(
         user_gateway=fake_user_gateway,
         transaction_db=fake_transaction_db,
         entity_saver=fake_entity_saver,
+        jwt_service=fake_jwt_service,
     )
     response = await interactor.run(dto)
 

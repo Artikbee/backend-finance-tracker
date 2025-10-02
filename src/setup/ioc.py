@@ -1,16 +1,29 @@
 from dishka import Provider, Scope
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from application.__common__.ports.jwt_service.jwt_service import JWTService
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
 from application.__common__.ports.persistence.user.reader import UserReader
+from application.commands.user.delete_user import DeleteUserCommandHandler
+from application.commands.user.login_user import LoginUserCommandHandler
+from application.commands.user.logout_user import LogoutUserCommandHandler
 from application.commands.user.register_user import RegisterUserCommandHandler
+from application.commands.user.update_user import UpdateUserCommandHandler
+from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
+from infrastructure.jwt.adapter import JWTServiceAdapter
 from infrastructure.persistence.adapters.entity_saver import EntitySaverAlchemy
 from infrastructure.persistence.adapters.transaction_db import TransactionDBAlchemy
 from infrastructure.persistence.adapters.user import UserReaderAlchemy, UserGatewayAlchemy
 from infrastructure.persistence.db_provider import get_engine, get_sessionmaker, get_session
+
+
+def infrastructure_provider() -> Provider:
+    provider = Provider(scope=Scope.REQUEST)
+    _ = provider.provide(JWTServiceAdapter, provides=JWTService)
+    return provider
 
 
 def db_provider() -> Provider:
@@ -34,18 +47,19 @@ def gateways_provider() -> Provider:
     _ = provider.provide(EntitySaverAlchemy, provides=EntitySaver)
     _ = provider.provide(UserReaderAlchemy, provides=UserReader)
     _ = provider.provide(UserGatewayAlchemy, provides=UserGateway)
-    _ = provider.provide(UserGatewayAlchemy, provides=UserGateway)
     return provider
 
 
 def interactors_provider() -> Provider:
     provider = Provider(scope=Scope.REQUEST)
     _ = provider.provide_all(
-        # DeleteUserCommandHandler,
-        # LoginUserCommandHandler,
-        # LogoutUserCommandHandler,
+        DeleteUserCommandHandler,
+        LoginUserCommandHandler,
+        LogoutUserCommandHandler,
         RegisterUserCommandHandler,
+        UpdateUserCommandHandler,
         # UpdateUserCommandHandler,
+        GetUserQueryHandler,
     )
     return provider
 
@@ -56,4 +70,5 @@ def setup_providers() -> tuple[Provider, ...]:
         interactors_provider(),
         gateways_provider(),
         db_provider(),
+        infrastructure_provider(),
     )

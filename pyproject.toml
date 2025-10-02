@@ -37,6 +37,7 @@ test = [
 ]
 lint = [
     "ruff",
+    "pyright==1.1.405",
 ]
 
 [tool.pytest.ini_options]

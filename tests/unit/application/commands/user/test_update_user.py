@@ -14,7 +14,6 @@ from domains.user.value_objects import UserLastName, UserFirstName, UserEmail
     [
         UpdateUserCommand(
             "access_token",
-            UserID(1),
             UserLastName("WWWW"),
             UserFirstName('qqww'),
             True,
@@ -26,11 +25,13 @@ async def test_update_user(
         fake_transaction_db: Mock,
         fake_entity_saver: Mock,
         fake_user_gateway: Mock,
+        fake_jwt_service: Mock,
 ) -> None:
     interactor = UpdateUserCommandHandler(
         user_gateway=fake_user_gateway,
         transaction_db=fake_transaction_db,
         entity_saver=fake_entity_saver,
+        jwt_service=fake_jwt_service,
     )
     fake_user = User.create(
         email=UserEmail("fake@email.com"),
@@ -44,5 +45,5 @@ async def test_update_user(
     response = await interactor.run(dto)
 
     assert isinstance(response, UpdateUserCommandResponse)
-    assert response.last_name == dto.last_name
+    assert response.last_name == dto.last_name.value
 

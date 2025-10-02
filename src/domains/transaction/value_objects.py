@@ -8,9 +8,11 @@ from domains.transaction.errors import (
 
 @dataclass(slots=True, frozen=True, eq=True)
 class TransactionDescription:
-    value: str
+    value: str | None
 
     def __post_init__(self) -> None:
+        if self.value is None:
+            return
         description_min_length = 1
         description_max_length = 100
         if len(self.value) < description_min_length:

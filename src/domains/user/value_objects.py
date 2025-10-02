@@ -12,9 +12,11 @@ from domains.user.errors import (
 
 @dataclass(slots=True, frozen=True, eq=True)
 class UserEmail:
-    value: str
+    value: str | None
 
     def __post_init__(self) -> None:
+        if self.value is None:
+            return
         pattern = r'[\w\.-]+@[\w\.-]+\.\w+$'
         if not re.match(pattern, self.value):
             raise UserEmailValidError(email=self.value)
@@ -22,9 +24,11 @@ class UserEmail:
 
 @dataclass(slots=True, frozen=True, eq=True)
 class UserLastName:
-    value: str
+    value: str | None
 
     def __post_init__(self) -> None:
+        if self.value is None:
+            return
         last_name_min_length = 1
         last_name_max_length = 50
         if len(self.value) < last_name_min_length:
@@ -35,9 +39,11 @@ class UserLastName:
 
 @dataclass(slots=True, frozen=True, eq=True)
 class UserFirstName:
-    value: str
+    value: str | None
 
     def __post_init__(self) -> None:
+        if self.value is None:
+            return
         first_name_min_length = 1
         first_name_max_length = 50
         if len(self.value) < first_name_min_length:
