@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 
 from application.__common__.ports.jwt_service.jwt_service import JWTService
+from application.__common__.ports.password_hasher_service.password_hasher_service import PasswordHasherService
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
@@ -39,4 +40,12 @@ def fake_user_gateway() -> UserGateway:
     fake.get_by_email = AsyncMock(return_value=None)
     fake.get_by_email_and_password = AsyncMock(return_value=None)
     fake.get_by_user_id = AsyncMock(return_value=None)
+    return fake
+
+
+@pytest.fixture
+def fake_password_hasher_service() -> PasswordHasherService:
+    fake = Mock()
+    fake.hash_password = Mock(return_value=None)
+    fake.verify_password = Mock(return_value=None)
     return fake

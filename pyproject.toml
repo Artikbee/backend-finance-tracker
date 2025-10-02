@@ -35,6 +35,7 @@ dependencies = [
 test = [
     "pytest",
     "pytest-asyncio",
+    "httpx==0.28.*",
 ]
 lint = [
     "ruff",

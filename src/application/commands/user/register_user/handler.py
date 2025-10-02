@@ -18,18 +18,18 @@ class RegisterUserCommandHandler:
             user_gateway: UserGateway,
             transaction_db: TransactionDB,
             entity_saver: EntitySaver,
-            password_hash_service: PasswordHasherService,
+            password_hasher_service: PasswordHasherService,
     ) -> None:
         self._user_gateway = user_gateway
         self._transaction_db = transaction_db
         self._entity_saver = entity_saver
-        self._password_hash_service = password_hash_service
+        self._password_hasher_service = password_hasher_service
 
     async def run(self, data: RegisterUserCommand) -> RegisterUserCommandResponse:
         user = await self._user_gateway.get_by_email(email=data.email)
         validate_user_already_exists(user)
 
-        hashed_password = self._password_hash_service.hash_password(data.password)
+        hashed_password = self._password_hasher_service.hash_password(data.password)
 
         new_user = User.create(
             email=data.email,

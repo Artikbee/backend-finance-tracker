@@ -6,13 +6,14 @@ from application.__common__.errors.base_errors import ConflictError
 from application.__common__.errors.user_already_exists import UserAlreadyExistsError
 from application.commands.user.register_user.dtos import RegisterUserCommand
 from application.commands.user.register_user.handler import RegisterUserCommandHandler
+from domains.user.value_objects import UserEmail
 
 
 @pytest.mark.parametrize(
     ("dto", "exc_class"),
     [
-        (RegisterUserCommand("fake@email.com", "1234567"), None),
-        (RegisterUserCommand("fake2@email.com", "1234567"), UserAlreadyExistsError),
+        (RegisterUserCommand(UserEmail("fake@email.com"), "1234567"), None),
+        (RegisterUserCommand(UserEmail("fake2@email.com"), "1234567"), UserAlreadyExistsError),
     ],
 )
 async def test_register_user(
@@ -21,11 +22,13 @@ async def test_register_user(
         fake_transaction_db: Mock,
         fake_entity_saver: Mock,
         fake_user_gateway: Mock,
+        fake_password_hasher_service: Mock,
 ) -> None:
     interactor = RegisterUserCommandHandler(
         user_gateway=fake_user_gateway,
         transaction_db=fake_transaction_db,
         entity_saver=fake_entity_saver,
+        password_hasher_service=fake_password_hasher_service,
     )
     if exc_class:
         fake_user_gateway.get_by_email.return_value = dto.email

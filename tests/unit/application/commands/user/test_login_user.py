@@ -23,12 +23,14 @@ async def test_login_user(
         fake_entity_saver: Mock,
         fake_user_gateway: Mock,
         fake_jwt_service: Mock,
+        fake_password_hasher_service: Mock,
 ) -> None:
     interactor = LoginUserCommandHandler(
         user_gateway=fake_user_gateway,
         transaction_db=fake_transaction_db,
         entity_saver=fake_entity_saver,
         jwt_service=fake_jwt_service,
+        password_hasher_service=fake_password_hasher_service,
     )
     if exc_class:
         ...
@@ -41,7 +43,8 @@ async def test_login_user(
             role=UserRole.USER,
             is_active=True,
         )
-        fake_user_gateway.get_by_email_and_password.return_value = fake_user
+        fake_user_gateway.get_by_email.return_value = fake_user
+        fake_password_hasher_service.verify_password.return_value = True
         fake_jwt_service.generate.return_value = '123', '345'
         fake_jwt_service.get_expires_time.return_value = 1, 2
 
