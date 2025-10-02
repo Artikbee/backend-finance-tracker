@@ -15,8 +15,12 @@ from application.queries.user.get_user.dtos import GetUserCommandResponse, GetUs
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from domains.user.value_objects import UserEmail, UserLastName, UserFirstName
 from presentation.http.v1.__common__.dependencies import CredentialsDependency
-from presentation.http.v1.__common__.schemas.user import RegisterUserSchema, LoginUserSchema, UpdateUserSchema, \
-    LogoutUserSchema
+from presentation.http.v1.__common__.schemas.user import (
+    RegisterUserSchema,
+    LoginUserSchema,
+    UpdateUserSchema,
+    LogoutUserSchema,
+)
 
 router = APIRouter(prefix="/users", tags=["Users"], route_class=DishkaRoute)
 

@@ -37,7 +37,9 @@ class UserGatewayAlchemy(UserGateway):
         return result.scalar_one_or_none()
 
     async def get_by_email(self, email: UserEmail) -> User | None:
-        ...
+        stmt = select(User).where(users_table.c.email == email.value)
+        result = await self._session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def get_by_user_id(self, user_id: UserID) -> User | None:
         stmt = select(User).where(users_table.c.user_id == user_id)

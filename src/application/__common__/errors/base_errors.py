@@ -3,6 +3,12 @@ class ApplicationError(Exception):
     def message(self) -> str:
         return "Application error occurred"
 
+class AuthenticationError(ApplicationError):
+    """
+    401 - Unauthorized
+    """
+    ...
+
 
 class ConflictError(ApplicationError):
     """

@@ -28,6 +28,7 @@ dependencies = [
     "python-dotenv==1.0.*",
     "uvicorn==0.31.*",
     "orjson==3.*", # ORJSONResponse
+    "argon2-cffi==25.1.0", # PasswordHasher
 ]
 
 [project.optional-dependencies]

@@ -2,6 +2,7 @@ from dishka import Provider, Scope
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from application.__common__.ports.jwt_service.jwt_service import JWTService
+from application.__common__.ports.password_hasher_service.password_hasher_service import PasswordHasherService
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
@@ -14,6 +15,7 @@ from application.commands.user.update_user import UpdateUserCommandHandler
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
 from infrastructure.jwt.adapter import JWTServiceAdapter
+from infrastructure.password_hasher.adapter import PasswordHasherServiceAdapter
 from infrastructure.persistence.adapters.entity_saver import EntitySaverAlchemy
 from infrastructure.persistence.adapters.transaction_db import TransactionDBAlchemy
 from infrastructure.persistence.adapters.user import UserReaderAlchemy, UserGatewayAlchemy
@@ -23,6 +25,7 @@ from infrastructure.persistence.db_provider import get_engine, get_sessionmaker,
 def infrastructure_provider() -> Provider:
     provider = Provider(scope=Scope.REQUEST)
     _ = provider.provide(JWTServiceAdapter, provides=JWTService)
+    _ = provider.provide(PasswordHasherServiceAdapter, provides=PasswordHasherService)
     return provider
 
 
