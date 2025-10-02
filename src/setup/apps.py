@@ -10,6 +10,7 @@ from infrastructure.configs import APIConfig, PostgresConfig
 from presentation.http.v1.routers import user
 from setup.configs import load_configs
 from setup.db_tables import map_tables
+from setup.exc_handlers import setup_exc_handlers
 from setup.ioc import setup_providers
 
 
@@ -37,7 +38,7 @@ def make_fastapi_app() -> FastAPI:
     container = make_async_container(*setup_providers(), context=context)
     map_tables()
     setup_http_routes(fastapi_app)
-    # setup_exc_handlers(fastapi_app)
+    setup_exc_handlers(fastapi_app)
     # setup_middlewares(fastapi_app, api_config=configs.api)
     fastapi_integration.setup_dishka(container, fastapi_app)
     return fastapi_app

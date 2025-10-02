@@ -3,9 +3,10 @@ class ApplicationError(Exception):
     def message(self) -> str:
         return "Application error occurred"
 
+
 class AuthenticationError(ApplicationError):
     """
-    401 - Unauthorized
+    401 - HTTP status code
     """
     ...
 
@@ -13,7 +14,6 @@ class AuthenticationError(ApplicationError):
 class ConflictError(ApplicationError):
     """
     409 - HTTP status code
-    Request conflict with the current state of the target resource.
     """
     ...
 
