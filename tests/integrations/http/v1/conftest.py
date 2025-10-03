@@ -1,3 +1,4 @@
+import os
 from collections.abc import AsyncIterator
 from typing import TYPE_CHECKING
 
@@ -13,19 +14,20 @@ if TYPE_CHECKING:
     from dishka import AsyncContainer
 
 
-# def _load_env() -> None:
-#     os.environ["POSTGRES_USER"] = "postgres"
-#     os.environ["POSTGRES_PASSWORD"] = "postgres"
-#     os.environ["POSTGRES_HOST"] = "localhost"
-#     os.environ["POSTGRES_PORT"] = "5432"
-#     os.environ["POSTGRES_DB"] = "test"
-#     os.environ["SQLALCHEMY_DEBUG"] = os.getenv("SQLALCHEMY_DEBUG", "true")
-#     os.environ["UVICORN_HOST"] = "127.0.0.1"
-#     os.environ["UVICORN_PORT"] = "8888"
+def _load_env() -> None:
+    os.environ["POSTGRES_USER"] = "postgres"
+    os.environ["POSTGRES_PASSWORD"] = "postgres"
+    os.environ["POSTGRES_HOST"] = "127.0.0.1"
+    os.environ["POSTGRES_PORT"] = "8473"
+    os.environ["POSTGRES_DB"] = "finance-tracker-test"
+    os.environ["POSTGRES_DEBUG"] = "true"
+    os.environ["UVICORN_HOST"] = "127.0.0.1"
+    os.environ["UVICORN_PORT"] = "9001"
 
 
 @pytest.fixture(scope="session")
 async def app() -> AsyncIterator[FastAPI]:
+    _load_env()
     app = make_fastapi_app()
     container: AsyncContainer = app.state.dishka_container
 
@@ -34,9 +36,9 @@ async def app() -> AsyncIterator[FastAPI]:
         await conn.run_sync(metadata.create_all)
 
     yield app
-    #
-    # async with engine.begin() as conn:
-    #     await conn.run_sync(metadata.drop_all)
+
+    async with engine.begin() as conn:
+        await conn.run_sync(metadata.drop_all)
 
 
 @pytest.fixture(scope="session")
