@@ -8,7 +8,7 @@ from sqlalchemy import (
     func,
     Boolean,
 )
-from sqlalchemy.orm import composite
+from sqlalchemy.orm import composite, relationship
 
 from domains.user.enums import UserRole
 from domains.user.models import User
@@ -85,6 +85,11 @@ def map_user_table() -> None:
             "first_name": composite(UserFirstName, users_table.c.first_name),
             "is_active": users_table.c.is_active,
             "role": users_table.c.role,
+            "accounts": relationship(
+                "Account",
+                back_populates="user",
+                cascade="all, delete-orphan",
+            ),
         },
         column_prefix="_",
     )

@@ -3,19 +3,24 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from application.__common__.ports.jwt_service.jwt_service import JWTService
 from application.__common__.ports.password_hasher_service.password_hasher_service import PasswordHasherService
+from application.__common__.ports.persistence.account.gateway import AccountGateway
+from application.__common__.ports.persistence.account.reader import AccountReader
 from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
 from application.__common__.ports.persistence.user.reader import UserReader
+from application.commands.account.create_account.handler import CreateAccountCommandHandler
 from application.commands.user.delete_user import DeleteUserCommandHandler
 from application.commands.user.login_user import LoginUserCommandHandler
 from application.commands.user.logout_user import LogoutUserCommandHandler
 from application.commands.user.register_user import RegisterUserCommandHandler
 from application.commands.user.update_user import UpdateUserCommandHandler
+from application.queries.account.get_accounts.handler import GetAccountsQueryHandler
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
 from infrastructure.jwt.adapter import JWTServiceAdapter
 from infrastructure.password_hasher.adapter import PasswordHasherServiceAdapter
+from infrastructure.persistence.adapters.account import AccountGatewayAlchemy, AccountReaderAlchemy
 from infrastructure.persistence.adapters.entity_saver import EntitySaverAlchemy
 from infrastructure.persistence.adapters.transaction_db import TransactionDBAlchemy
 from infrastructure.persistence.adapters.user import UserReaderAlchemy, UserGatewayAlchemy
@@ -50,6 +55,8 @@ def gateways_provider() -> Provider:
     _ = provider.provide(EntitySaverAlchemy, provides=EntitySaver)
     _ = provider.provide(UserReaderAlchemy, provides=UserReader)
     _ = provider.provide(UserGatewayAlchemy, provides=UserGateway)
+    _ = provider.provide(AccountGatewayAlchemy, provides=AccountGateway)
+    _ = provider.provide(AccountReaderAlchemy, provides=AccountReader)
     return provider
 
 
@@ -61,8 +68,9 @@ def interactors_provider() -> Provider:
         LogoutUserCommandHandler,
         RegisterUserCommandHandler,
         UpdateUserCommandHandler,
-        # UpdateUserCommandHandler,
         GetUserQueryHandler,
+        CreateAccountCommandHandler,
+        GetAccountsQueryHandler,
     )
     return provider
 

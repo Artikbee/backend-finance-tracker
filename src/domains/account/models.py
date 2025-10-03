@@ -1,5 +1,6 @@
 import decimal
 from dataclasses import dataclass
+from decimal import Decimal
 from typing import NewType, cast
 
 from typing_extensions import Self
@@ -19,7 +20,7 @@ class Account(BaseEntity[AccountID]):
     name: AccountName
     account_type: AccountType
     currency: Currency
-    balance: decimal.Decimal
+    balance: Decimal
     is_active: bool
 
     def update_name(self, name: AccountName) -> None:
@@ -44,7 +45,7 @@ class Account(BaseEntity[AccountID]):
             name: AccountName,
             account_type: AccountType,
             currency: Currency,
-            balance: decimal.Decimal,
+            balance: Decimal,
             is_active: bool,
     ) -> Self:
         return cls(

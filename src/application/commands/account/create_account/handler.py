@@ -5,15 +5,13 @@ from application.__common__.ports.persistence.entity_saver import EntitySaver
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
 from application.__common__.validators.user_not_found import validate_user_not_found
-from application.commands.user.update_user.dtos import (
-    UpdateUserCommand,
-    UpdateUserCommandResponse,
-)
+from application.commands.account.create_account.dtos import CreateAccountCommand, CreateAccountCommandResponse
+from domains.account.models import Account
 
 logger = logging.getLogger(__name__)
 
 
-class UpdateUserCommandHandler:
+class CreateAccountCommandHandler:
     def __init__(
             self,
             user_gateway: UserGateway,
@@ -26,7 +24,7 @@ class UpdateUserCommandHandler:
         self._entity_saver = entity_saver
         self._jwt_service = jwt_service
 
-    async def run(self, data: UpdateUserCommand) -> UpdateUserCommandResponse:
+    async def run(self, data: CreateAccountCommand) -> CreateAccountCommandResponse:
         user_id = await self._jwt_service.verify_and_get_user_id(
             token=data.access_token,
             expected_type='access',
@@ -34,15 +32,17 @@ class UpdateUserCommandHandler:
         user = await self._user_gateway.get_by_user_id(user_id=user_id)
         validate_user_not_found(user)
 
-        user.update_is_active(data.is_active)
-        user.update_last_name(data.last_name)
-        user.update_first_name(data.first_name)
-
-        await self._transaction_db.flush()
-
-        return UpdateUserCommandResponse(
+        new_account = Account.create(
             user_id=user.oid,
-            last_name=user.last_name.value,
-            first_name=user.first_name.value,
-            is_active=user.is_active,
+            name=data.name,
+            account_type=data.account_type,
+            currency=data.currency,
+            balance=data.balance,
+            is_active=True,
+        )
+        self._entity_saver.add_one(new_account)
+        await self._transaction_db.commit()
+
+        return CreateAccountCommandResponse(
+            account_id=new_account.oid
         )
