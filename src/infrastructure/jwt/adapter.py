@@ -5,6 +5,7 @@ import jwt
 
 from application.__common__.ports.jwt_service.jwt_service import JWTService
 from domains.user.models import UserID
+from infrastructure.__common__.errors.jwt_error import JWTError
 
 
 class JWTServiceAdapter(JWTService):
@@ -58,15 +59,13 @@ class JWTServiceAdapter(JWTService):
             )
 
             if expected_type and payload.get("type") != expected_type:
-                raise ValueError("Invalid token type")
+                raise JWTError()  # Invalid token type
 
             user_id = payload.get("sub")
             if not user_id:
-                raise ValueError("user_id not found in token")
+                raise JWTError()  # user_id not found in token
 
             return UserID(int(user_id))
 
-        except jwt.ExpiredSignatureError:
-            raise ValueError("Token has expired")
-        except jwt.InvalidTokenError as e:
-            raise ValueError(f"Invalid token: {str(e)}")
+        except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
+            raise JWTError()  # Token has expired and Invalid token
