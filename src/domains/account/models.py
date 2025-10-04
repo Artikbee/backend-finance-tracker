@@ -14,7 +14,7 @@ from domains.user.models import UserID
 AccountID = NewType('AccountID', int)
 
 
-@dataclass(slots=True, kw_only=True)
+@dataclass
 class Account(BaseEntity[AccountID]):
     user_id: UserID
     name: AccountName

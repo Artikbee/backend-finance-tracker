@@ -11,3 +11,10 @@ class CreateAccountSchema(BaseModel):
     account_type: AccountType
     currency: Currency
     balance: Decimal
+
+
+class UpdateAccountSchema(BaseModel):
+    name: str
+    account_type: AccountType
+    currency: Currency
+    is_active: bool

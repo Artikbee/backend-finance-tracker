@@ -10,11 +10,14 @@ from application.__common__.ports.persistence.transaction_db import TransactionD
 from application.__common__.ports.persistence.user.gateway import UserGateway
 from application.__common__.ports.persistence.user.reader import UserReader
 from application.commands.account.create_account.handler import CreateAccountCommandHandler
+from application.commands.account.delete_account.handler import DeleteAccountCommandHandler
+from application.commands.account.update_account.handler import UpdateAccountCommandHandler
 from application.commands.user.delete_user import DeleteUserCommandHandler
 from application.commands.user.login_user import LoginUserCommandHandler
 from application.commands.user.logout_user import LogoutUserCommandHandler
 from application.commands.user.register_user import RegisterUserCommandHandler
 from application.commands.user.update_user import UpdateUserCommandHandler
+from application.queries.account.get_account.handler import GetAccountQueryHandler
 from application.queries.account.get_accounts.handler import GetAccountsQueryHandler
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
@@ -69,8 +72,11 @@ def interactors_provider() -> Provider:
         RegisterUserCommandHandler,
         UpdateUserCommandHandler,
         GetUserQueryHandler,
-        CreateAccountCommandHandler,
         GetAccountsQueryHandler,
+        GetAccountQueryHandler,
+        CreateAccountCommandHandler,
+        UpdateAccountCommandHandler,
+        DeleteAccountCommandHandler,
     )
     return provider
 

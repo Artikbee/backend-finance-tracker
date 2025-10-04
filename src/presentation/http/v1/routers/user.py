@@ -11,7 +11,7 @@ from application.commands.user.register_user import (
     RegisterUserCommandResponse,
 )
 from application.commands.user.update_user import UpdateUserCommandHandler, UpdateUserCommand, UpdateUserCommandResponse
-from application.queries.user.get_user.dtos import GetUserCommandResponse, GetUserCommand
+from application.queries.user.get_user.dtos import GetUserQueryResponse, GetUserQuery
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from domains.user.value_objects import UserEmail, UserLastName, UserFirstName
 from presentation.http.v1.__common__.dependencies import CredentialsDependency
@@ -90,8 +90,8 @@ async def delete_user(
 async def get_user(
         interactor: FromDishka[GetUserQueryHandler],
         credentials: CredentialsDependency,
-) -> GetUserCommandResponse:
-    dto = GetUserCommand(
+) -> GetUserQueryResponse:
+    dto = GetUserQuery(
         access_token=credentials.credentials,
     )
     return await interactor.run(dto)

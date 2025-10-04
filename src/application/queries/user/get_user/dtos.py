@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, slots=True)
-class GetUserCommandResponse:
+class GetUserQueryResponse:
     email: str
     last_name: str
     first_name: str
@@ -11,5 +11,5 @@ class GetUserCommandResponse:
 
 
 @dataclass(frozen=True, slots=True)
-class GetUserCommand:
+class GetUserQuery:
     access_token: str
