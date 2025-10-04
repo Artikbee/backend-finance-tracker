@@ -90,6 +90,11 @@ def map_user_table() -> None:
                 back_populates="user",
                 cascade="all, delete-orphan",
             ),
+            "categories": relationship(
+                "Category",
+                back_populates="user",
+                cascade="all, delete-orphan",
+            ),
         },
         column_prefix="_",
     )

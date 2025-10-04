@@ -10,7 +10,7 @@ from domains.user.models import UserID
 CategoryID = NewType('CategoryID', int)
 
 
-@dataclass(slots=True, kw_only=True)
+@dataclass
 class Category(BaseEntity[CategoryID]):
     user_id: UserID
     name: CategoryName
