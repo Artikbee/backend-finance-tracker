@@ -96,6 +96,10 @@ def map_account_table() -> None:
                 "User",
                 back_populates="accounts",
             ),
+            "transactions": relationship(
+                "Transaction",
+                back_populates="account",
+            )
         },
         column_prefix="_",
     )

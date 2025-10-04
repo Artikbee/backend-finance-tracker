@@ -64,6 +64,10 @@ def map_category_table() -> None:
                 "User",
                 back_populates="categories",
             ),
+            "transactions": relationship(
+                "Transaction",
+                back_populates="category",
+            )
         },
         column_prefix="_",
     )

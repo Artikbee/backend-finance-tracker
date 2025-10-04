@@ -32,6 +32,23 @@ class AccountReaderAlchemy(AccountReader):
         result = await self._session.execute(stmt)
         return result.scalars().one_or_none()
 
+    async def get_by_account_id_and_user_id_join_transaction(
+            self,
+            user_id: UserID,
+            account_id: AccountID,
+    ):
+        stmt = (
+            select(Account)
+            .where(
+                and_(
+                    accounts_table.c.user_id == user_id,
+                    accounts_table.c.account_id == account_id,
+                )
+            )
+        )
+        result = await self._session.execute(stmt)
+        return result.scalars().one_or_none()
+
 
 class AccountGatewayAlchemy(AccountGateway):
     def __init__(self, session: AsyncSession) -> None:

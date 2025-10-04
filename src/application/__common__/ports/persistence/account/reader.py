@@ -16,3 +16,11 @@ class AccountReader(ABC):
             account_id: AccountID,
     ) -> Account | None:
         ...
+
+    @abstractmethod
+    async def get_by_account_id_and_user_id_join_transaction(
+            self,
+            user_id: UserID,
+            account_id: AccountID,
+    ) -> Account | None:
+        ...

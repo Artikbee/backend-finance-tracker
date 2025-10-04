@@ -7,7 +7,7 @@ from fastapi import FastAPI, APIRouter
 from fastapi.responses import ORJSONResponse
 
 from infrastructure.configs import APIConfig, PostgresConfig
-from presentation.http.v1.routers import user, account, category
+from presentation.http.v1.routers import user, account, category, transaction
 from setup.configs import load_configs
 from setup.db_tables import map_tables
 from setup.exc_handlers import setup_exc_handlers
@@ -26,6 +26,7 @@ def setup_http_routes(app: FastAPI) -> None:
     router_v1.include_router(user.router)
     router_v1.include_router(account.router)
     router_v1.include_router(category.router)
+    router_v1.include_router(transaction.router)
     app.include_router(router_v1)
 
 

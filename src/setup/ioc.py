@@ -8,6 +8,7 @@ from application.__common__.ports.persistence.account.reader import AccountReade
 from application.__common__.ports.persistence.category.gateway import CategoryGateway
 from application.__common__.ports.persistence.category.reader import CategoryReader
 from application.__common__.ports.persistence.entity_saver import EntitySaver
+from application.__common__.ports.persistence.transaction.reader import TransactionReader
 from application.__common__.ports.persistence.transaction_db import TransactionDB
 from application.__common__.ports.persistence.user.gateway import UserGateway
 from application.__common__.ports.persistence.user.reader import UserReader
@@ -15,6 +16,7 @@ from application.commands.account.create_account.handler import CreateAccountCom
 from application.commands.account.delete_account.handler import DeleteAccountCommandHandler
 from application.commands.account.update_account.handler import UpdateAccountCommandHandler
 from application.commands.category.create_category.handler import CreateCategoryCommandHandler
+from application.commands.transaction.create_transaction.handler import CreateTransactionCommandHandler
 from application.commands.user.delete_user import DeleteUserCommandHandler
 from application.commands.user.login_user import LoginUserCommandHandler
 from application.commands.user.logout_user import LogoutUserCommandHandler
@@ -23,6 +25,7 @@ from application.commands.user.update_user import UpdateUserCommandHandler
 from application.queries.account.get_account_by_id.handler import GetAccountByIDQueryHandler
 from application.queries.account.get_accounts.handler import GetAccountsQueryHandler
 from application.queries.category.get_categories.handler import GetCategoriesQueryHandler
+from application.queries.transaction.get_transactions.handler import GetTransactionsQueryHandler
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
 from infrastructure.jwt.adapter import JWTServiceAdapter
@@ -30,6 +33,7 @@ from infrastructure.password_hasher.adapter import PasswordHasherServiceAdapter
 from infrastructure.persistence.adapters.account import AccountGatewayAlchemy, AccountReaderAlchemy
 from infrastructure.persistence.adapters.category import CategoryReaderAlchemy, CategoryGatewayAlchemy
 from infrastructure.persistence.adapters.entity_saver import EntitySaverAlchemy
+from infrastructure.persistence.adapters.transaction import TransactionReaderAlchemy
 from infrastructure.persistence.adapters.transaction_db import TransactionDBAlchemy
 from infrastructure.persistence.adapters.user import UserReaderAlchemy, UserGatewayAlchemy
 from infrastructure.persistence.db_provider import get_engine, get_sessionmaker, get_session
@@ -67,6 +71,7 @@ def gateways_provider() -> Provider:
     _ = provider.provide(AccountReaderAlchemy, provides=AccountReader)
     _ = provider.provide(CategoryReaderAlchemy, provides=CategoryReader)
     _ = provider.provide(CategoryGatewayAlchemy, provides=CategoryGateway)
+    _ = provider.provide(TransactionReaderAlchemy, provides=TransactionReader)
     return provider
 
 
@@ -86,6 +91,8 @@ def interactors_provider() -> Provider:
         DeleteAccountCommandHandler,
         CreateCategoryCommandHandler,
         GetCategoriesQueryHandler,
+        CreateTransactionCommandHandler,
+        GetTransactionsQueryHandler,
     )
     return provider
 
