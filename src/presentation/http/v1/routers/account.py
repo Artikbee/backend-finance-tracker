@@ -10,6 +10,8 @@ from application.commands.account.delete_account.dtos import DeleteAccountComman
 from application.commands.account.delete_account.handler import DeleteAccountCommandHandler
 from application.commands.account.update_account.dtos import UpdateAccountCommand, UpdateAccountCommandResponse
 from application.commands.account.update_account.handler import UpdateAccountCommandHandler
+from application.queries.account.get_account_by_id.dtos import GetAccountByIDQueryResponse, GetAccountByIDQuery
+from application.queries.account.get_account_by_id.handler import GetAccountByIDQueryHandler
 from application.queries.account.get_accounts.dtos import GetAccountsQueryResponse, GetAccountsQuery
 from application.queries.account.get_accounts.handler import GetAccountsQueryHandler
 from domains.account.models import AccountID
@@ -37,10 +39,16 @@ async def create_account(
 
 
 @router.get("/{account_id}")
-async def get_account(
-        request_data: CreateAccountSchema,
-) -> None:
-    ...
+async def get_account_by_id(
+        account_id: Annotated[AccountID, Path(alias="account_id")],
+        interactor: FromDishka[GetAccountByIDQueryHandler],
+        credentials: CredentialsDependency,
+) -> GetAccountByIDQueryResponse:
+    dto = GetAccountByIDQuery(
+        access_token=credentials.credentials,
+        account_id=account_id,
+    )
+    return await interactor.run(dto)
 
 
 @router.get("/")

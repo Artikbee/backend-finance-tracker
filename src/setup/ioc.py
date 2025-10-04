@@ -17,7 +17,7 @@ from application.commands.user.login_user import LoginUserCommandHandler
 from application.commands.user.logout_user import LogoutUserCommandHandler
 from application.commands.user.register_user import RegisterUserCommandHandler
 from application.commands.user.update_user import UpdateUserCommandHandler
-from application.queries.account.get_account.handler import GetAccountQueryHandler
+from application.queries.account.get_account_by_id.handler import GetAccountByIDQueryHandler
 from application.queries.account.get_accounts.handler import GetAccountsQueryHandler
 from application.queries.user.get_user.handler import GetUserQueryHandler
 from infrastructure.configs import APIConfig, PostgresConfig
@@ -73,7 +73,7 @@ def interactors_provider() -> Provider:
         UpdateUserCommandHandler,
         GetUserQueryHandler,
         GetAccountsQueryHandler,
-        GetAccountQueryHandler,
+        GetAccountByIDQueryHandler,
         CreateAccountCommandHandler,
         UpdateAccountCommandHandler,
         DeleteAccountCommandHandler,

@@ -7,7 +7,7 @@ from domains.account.models import AccountID
 
 
 @dataclass(frozen=True, slots=True)
-class GetAccountQueryResponse:
+class GetAccountByIDQueryResponse:
     account_id: int
     name: str
     account_type: AccountType
@@ -17,6 +17,6 @@ class GetAccountQueryResponse:
 
 
 @dataclass(frozen=True, slots=True)
-class GetAccountQuery:
+class GetAccountByIDQuery:
     access_token: str
     account_id: AccountID

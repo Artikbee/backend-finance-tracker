@@ -5,12 +5,13 @@ from application.__common__.ports.persistence.account.reader import AccountReade
 from application.__common__.ports.persistence.user.reader import UserReader
 from application.__common__.validators.account_not_found import validate_account_not_found
 from application.__common__.validators.user_not_found import validate_user_not_found
-from application.queries.account.get_account.dtos import GetAccountQuery, GetAccountQueryResponse
+from application.queries.account.get_account_by_id.dtos import \
+    GetAccountByIDQuery, GetAccountByIDQueryResponse
 
 logger = logging.getLogger(__name__)
 
 
-class GetAccountQueryHandler:
+class GetAccountByIDQueryHandler:
     def __init__(
             self,
             user_reader: UserReader,
@@ -21,7 +22,7 @@ class GetAccountQueryHandler:
         self._jwt_service = jwt_service
         self._account_reader = account_reader
 
-    async def run(self, data: GetAccountQuery) -> GetAccountQueryResponse:
+    async def run(self, data: GetAccountByIDQuery) -> GetAccountByIDQueryResponse:
         user_id = await self._jwt_service.verify_and_get_user_id(
             token=data.access_token,
             expected_type="access"
@@ -35,7 +36,7 @@ class GetAccountQueryHandler:
         )
         validate_account_not_found(account)
 
-        return GetAccountQueryResponse(
+        return GetAccountByIDQueryResponse(
             account_id=account.oid,
             name=account.name.value,
             account_type=account.account_type,

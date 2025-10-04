@@ -30,7 +30,7 @@ class AccountReaderAlchemy(AccountReader):
 
         )
         result = await self._session.execute(stmt)
-        return result.one_or_none()
+        return result.scalars().one_or_none()
 
 
 class AccountGatewayAlchemy(AccountGateway):
