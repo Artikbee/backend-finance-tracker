@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from application.__common__.ports.persistence.category.gateway import CategoryGateway
 from application.__common__.ports.persistence.category.reader import CategoryReader
 from domains.account.models import Account, AccountID
-from domains.category.models import Category
+from domains.category.models import Category, CategoryID
 from domains.user.models import UserID
 from infrastructure.persistence.models.account import accounts_table
 from infrastructure.persistence.models.category import categories_table
@@ -18,6 +18,11 @@ class CategoryReaderAlchemy(CategoryReader):
         stmt = select(Category).where(categories_table.c.user_id == user_id)
         result = await self._session.execute(stmt)
         return result.scalars().all()
+
+    async def get_by_category_id(self, category_id: CategoryID) -> Category | None:
+        stmt = select(Category).where(categories_table.c.category_id == category_id)
+        result = await self._session.execute(stmt)
+        return result.scalars().one_or_none()
 
 
 class CategoryGatewayAlchemy(CategoryGateway):

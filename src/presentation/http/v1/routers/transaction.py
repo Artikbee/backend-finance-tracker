@@ -7,7 +7,7 @@ from fastapi import APIRouter, Path
 from application.commands.transaction.create_transaction.dtos import CreateTransactionCommand, \
     CreateTransactionCommandResponse
 from application.commands.transaction.create_transaction.handler import CreateTransactionCommandHandler
-from application.queries.transaction.get_transactions.dtos import GetTransactionsQuery
+from application.queries.transaction.get_transactions.dtos import GetTransactionsQuery, GetTransactionsQueryResponse
 from application.queries.transaction.get_transactions.handler import GetTransactionsQueryHandler
 from domains.account.models import AccountID
 from domains.category.models import CategoryID
@@ -41,7 +41,7 @@ async def get_transactions(
         account_id: Annotated[AccountID, Path(alias="account_id")],
         interactor: FromDishka[GetTransactionsQueryHandler],
         credentials: CredentialsDependency,
-):
+) -> GetTransactionsQueryResponse:
     dto = GetTransactionsQuery(
         access_token=credentials.credentials,
         account_id=account_id,

@@ -7,7 +7,8 @@ from application.__common__.ports.persistence.transaction.reader import Transact
 from application.__common__.ports.persistence.user.reader import UserReader
 from application.__common__.validators.account_not_found import validate_account_not_found
 from application.__common__.validators.user_not_found import validate_user_not_found
-from application.queries.transaction.get_transactions.dtos import GetTransactionsQuery
+from application.queries.transaction.get_transactions.dtos import GetTransactionsQuery, GetTransactionQueryResponse, \
+    GetTransactionsQueryResponse
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class GetTransactionsQueryHandler:
         self._account_reader = account_reader
         self._transaction_reader = transaction_reader
 
-    async def run(self, data: GetTransactionsQuery) -> str:
+    async def run(self, data: GetTransactionsQuery) -> GetTransactionsQueryResponse:
         user_id = await self._jwt_service.verify_and_get_user_id(
             token=data.access_token,
             expected_type="access"
@@ -45,4 +46,20 @@ class GetTransactionsQueryHandler:
             account_id=account.oid
         )
 
-        return transactions
+        transaction_res = []
+        for i in transactions:
+            category = await self._category_reader.get_by_category_id(
+                category_id=i.category_id,
+            )
+            transaction_res.append(
+                GetTransactionQueryResponse(
+                    category_name=category.name.value,
+                    transaction_type=i.transaction_type,
+                    amount=i.amount,
+                    description=i.description.value,
+                )
+            )
+
+        return GetTransactionsQueryResponse(
+            transactions=transaction_res
+        )
