@@ -12,6 +12,7 @@ from setup.configs import load_configs
 from setup.db_tables import map_tables
 from setup.exc_handlers import setup_exc_handlers
 from setup.ioc import setup_providers
+from setup.middlewares import setup_middlewares
 
 
 @asynccontextmanager
@@ -42,6 +43,6 @@ def make_fastapi_app() -> FastAPI:
     map_tables()
     setup_http_routes(fastapi_app)
     setup_exc_handlers(fastapi_app)
-    # setup_middlewares(fastapi_app, api_config=configs.api)
+    setup_middlewares(fastapi_app, api_config=configs.api)
     fastapi_integration.setup_dishka(container, fastapi_app)
     return fastapi_app
