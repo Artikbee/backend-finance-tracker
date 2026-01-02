@@ -9,17 +9,7 @@ from domains.transaction.models import Transaction
 from domains.transaction.value_objects import TransactionDescription
 
 
-@pytest.fixture
-def transaction() -> Transaction:
-    return Transaction.create(
-        account_id=AccountID(1),
-        category_id=CategoryID(1),
-        transaction_type=TransactionType.INCOME,
-        amount=Decimal(10),
-        description=TransactionDescription("123"),
-    )
-
-
+@pytest.mark.models
 def test_create_transaction(transaction: Transaction) -> None:
     assert isinstance(transaction, Transaction)
     assert transaction.account_id == AccountID(1)

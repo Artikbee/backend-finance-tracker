@@ -5,10 +5,11 @@ import pytest
 from application.commands.user.update_user.dtos import UpdateUserCommand, UpdateUserCommandResponse
 from application.commands.user.update_user.handler import UpdateUserCommandHandler
 from domains.user.enums import UserRole
-from domains.user.models import UserID, User
+from domains.user.models import User
 from domains.user.value_objects import UserLastName, UserFirstName, UserEmail
 
 
+@pytest.mark.commands
 @pytest.mark.parametrize(
     "dto",
     [
@@ -46,4 +47,3 @@ async def test_update_user(
 
     assert isinstance(response, UpdateUserCommandResponse)
     assert response.last_name == dto.last_name.value
-

@@ -9,6 +9,7 @@ from application.commands.user.register_user.handler import RegisterUserCommandH
 from domains.user.value_objects import UserEmail
 
 
+@pytest.mark.commands
 @pytest.mark.parametrize(
     ("dto", "exc_class"),
     [

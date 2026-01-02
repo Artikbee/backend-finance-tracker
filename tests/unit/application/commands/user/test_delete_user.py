@@ -9,6 +9,7 @@ from domains.user.models import User
 from domains.user.value_objects import UserEmail
 
 
+@pytest.mark.commands
 @pytest.mark.parametrize(
     "dto",
     [

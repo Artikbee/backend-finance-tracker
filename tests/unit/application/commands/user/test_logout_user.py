@@ -6,6 +6,7 @@ from application.commands.user.logout_user.dtos import LogoutUserCommand, Logout
 from application.commands.user.logout_user.handler import LogoutUserCommandHandler
 
 
+@pytest.mark.commands
 @pytest.mark.parametrize(
     "dto",
     [
